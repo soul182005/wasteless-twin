@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import CountdownTimer from "@/components/CountdownTimer";
 import DigitalTwinGraph from "@/components/DigitalTwinGraph";
 import { getUrgencyLevel, getFoodEmoji } from "@/lib/digitalTwin";
-import { getRemainingHours } from "@/lib/foodStore";
+import { getRemainingHours, getExpiryTime } from "@/lib/foodStore";
 
 const NgoDashboard = () => {
   const { foods, requestPickup } = useFoodContext();
