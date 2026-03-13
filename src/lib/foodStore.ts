@@ -11,6 +11,7 @@ export interface FoodItem {
   current_temp: number;
   predicted_spoilage_hours: number;
   predicted_spoilage_time: string;
+  use_digital_twin: boolean;
   status: "available" | "pickup_requested" | "picked_up";
   created_at: string;
   updated_at: string;
