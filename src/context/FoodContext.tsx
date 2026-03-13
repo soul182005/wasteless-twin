@@ -12,6 +12,7 @@ interface FoodContextType {
     provider_address: string;
     quantity: string;
     expiry_hours: number;
+    use_digital_twin: boolean;
   }) => FoodItem;
   requestPickup: (id: string) => void;
   confirmPickup: (id: string) => void;
@@ -41,6 +42,7 @@ export function FoodProvider({ children }: { children: React.ReactNode }) {
       provider_address: string;
       quantity: string;
       expiry_hours: number;
+      use_digital_twin: boolean;
     }) => {
       const temp = fetchTemperature(data.city);
       const spoilageHours = predictSpoilage(temp, data.expiry_hours);

@@ -11,6 +11,7 @@ export interface FoodItem {
   current_temp: number;
   predicted_spoilage_hours: number;
   predicted_spoilage_time: string;
+  use_digital_twin: boolean;
   status: "available" | "pickup_requested" | "picked_up";
   created_at: string;
   updated_at: string;
@@ -66,5 +67,11 @@ export function getRemainingHours(item: FoodItem): number {
   const createdAt = new Date(item.created_at).getTime();
   const now = Date.now();
   const elapsedHours = (now - createdAt) / (1000 * 60 * 60);
-  return Math.max(0, item.predicted_spoilage_hours - elapsedHours);
+  const totalHours = item.use_digital_twin ? item.predicted_spoilage_hours : item.expiry_hours;
+  return Math.max(0, totalHours - elapsedHours);
+}
+
+export function getExpiryTime(item: FoodItem): string {
+  const totalHours = item.use_digital_twin ? item.predicted_spoilage_hours : item.expiry_hours;
+  return new Date(new Date(item.created_at).getTime() + totalHours * 60 * 60 * 1000).toISOString();
 }

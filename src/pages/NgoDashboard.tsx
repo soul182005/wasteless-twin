@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import CountdownTimer from "@/components/CountdownTimer";
 import DigitalTwinGraph from "@/components/DigitalTwinGraph";
 import { getUrgencyLevel, getFoodEmoji } from "@/lib/digitalTwin";
-import { getRemainingHours } from "@/lib/foodStore";
+import { getRemainingHours, getExpiryTime } from "@/lib/foodStore";
 
 const NgoDashboard = () => {
   const { foods, requestPickup } = useFoodContext();
@@ -59,7 +59,10 @@ const NgoDashboard = () => {
                       <p><span className="text-muted-foreground">🌡️</span> {item.current_temp}°C</p>
                       <p>
                         <span className="text-muted-foreground">⏱️</span>{" "}
-                        <CountdownTimer targetTime={item.predicted_spoilage_time} />
+                        <CountdownTimer targetTime={getExpiryTime(item)} />
+                        <span className="ml-1 text-xs text-muted-foreground">
+                          {item.use_digital_twin ? "🧠 AI" : "📝 Manual"}
+                        </span>
                       </p>
                     </div>
 

@@ -3,10 +3,12 @@ import { useFoodContext } from "@/context/FoodContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 export default function AddFoodForm() {
   const { addFoodItem } = useFoodContext();
+  const [useDigitalTwin, setUseDigitalTwin] = useState(true);
   const [form, setForm] = useState({
     food_name: "",
     description: "",
@@ -29,8 +31,10 @@ export default function AddFoodForm() {
     const item = addFoodItem({
       ...form,
       expiry_hours: Number(form.expiry_hours),
+      use_digital_twin: useDigitalTwin,
     });
-    toast.success(`Added "${item.food_name}" — predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C`);
+    const activeHours = useDigitalTwin ? item.predicted_spoilage_hours : item.expiry_hours;
+    toast.success(`Added "${item.food_name}" — ${useDigitalTwin ? `AI predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C` : `using your ${item.expiry_hours}h expiry`}`);
     setForm({ food_name: "", description: "", city: "", provider_address: "", quantity: "", expiry_hours: "" });
   };
 
@@ -65,6 +69,26 @@ export default function AddFoodForm() {
         <Label htmlFor="provider_address">Address</Label>
         <Input name="provider_address" value={form.provider_address} onChange={handleChange} placeholder="12 MG Road, Andheri" />
       </div>
+
+      {/* Digital Twin Toggle */}
+      <div className="flex items-center justify-between rounded-lg border border-border p-3 bg-muted/30">
+        <div className="space-y-0.5">
+          <Label htmlFor="digital-twin-toggle" className="text-sm font-semibold cursor-pointer">
+            🧠 Use AI Spoilage Prediction
+          </Label>
+          <p className="text-xs text-muted-foreground">
+            {useDigitalTwin
+              ? "Digital Twin will adjust expiry based on temperature & conditions"
+              : "Using your manually entered expiry time as-is"}
+          </p>
+        </div>
+        <Switch
+          id="digital-twin-toggle"
+          checked={useDigitalTwin}
+          onCheckedChange={setUseDigitalTwin}
+        />
+      </div>
+
       <Button type="submit" className="w-full">Add to Fridge</Button>
     </form>
   );
