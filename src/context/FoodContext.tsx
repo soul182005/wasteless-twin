@@ -12,6 +12,7 @@ interface FoodContextType {
     provider_address: string;
     quantity: string;
     expiry_hours: number;
+    use_digital_twin: boolean;
   }) => FoodItem;
   requestPickup: (id: string) => void;
   confirmPickup: (id: string) => void;
