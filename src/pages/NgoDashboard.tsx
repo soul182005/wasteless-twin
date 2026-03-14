@@ -23,7 +23,7 @@ const NgoDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border px-6 py-3 flex items-center justify-between bg-card">
-        <Link to="/" className="font-display text-xl font-bold text-primary">🍱 Food Guardian</Link>
+        <Link to="/" className="font-display text-xl font-bold text-primary">🍱 Wasteless Twin</Link>
         <span className="text-sm text-muted-foreground font-display">NGO Dashboard</span>
       </header>
 
