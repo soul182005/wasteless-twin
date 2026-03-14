@@ -74,7 +74,7 @@ export default function AddFoodForm() {
       <div className="flex items-center justify-between rounded-lg border border-border p-3 bg-muted/30">
         <div className="space-y-0.5">
           <Label htmlFor="digital-twin-toggle" className="text-sm font-semibold cursor-pointer">
-            🧠 Use AI Spoilage Prediction
+            🧠 Use Digital Twin Spoilage Prediction
           </Label>
           <p className="text-xs text-muted-foreground">
             {useDigitalTwin
