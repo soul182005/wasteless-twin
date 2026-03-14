@@ -7,7 +7,7 @@ const Landing = () => {
       <div className="text-center max-w-2xl animate-float">
         <div className="text-7xl mb-4">🍱</div>
         <h1 className="font-display text-5xl font-bold text-foreground mb-3">
-          Food Waste <span className="text-primary">Guardian</span>
+          Wasteless <span className="text-primary">Twin</span>
         </h1>
         <p className="text-muted-foreground text-lg mb-2">
           Digital Twin-powered Food Waste Management &amp; Alert System
