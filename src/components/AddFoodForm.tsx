@@ -34,7 +34,7 @@ export default function AddFoodForm() {
       use_digital_twin: useDigitalTwin,
     });
     const activeHours = useDigitalTwin ? item.predicted_spoilage_hours : item.expiry_hours;
-    toast.success(`Added "${item.food_name}" — ${useDigitalTwin ? `AI predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C` : `using your ${item.expiry_hours}h expiry`}`);
+    toast.success(`Added "${item.food_name}" — ${useDigitalTwin ? `Digital Twin predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C` : `using your ${item.expiry_hours}h expiry`}`);
     setForm({ food_name: "", description: "", city: "", provider_address: "", quantity: "", expiry_hours: "" });
   };
 
@@ -74,7 +74,7 @@ export default function AddFoodForm() {
       <div className="flex items-center justify-between rounded-lg border border-border p-3 bg-muted/30">
         <div className="space-y-0.5">
           <Label htmlFor="digital-twin-toggle" className="text-sm font-semibold cursor-pointer">
-            🧠 Use AI Spoilage Prediction
+            🧠 Use Digital Twin Spoilage Prediction
           </Label>
           <p className="text-xs text-muted-foreground">
             {useDigitalTwin
