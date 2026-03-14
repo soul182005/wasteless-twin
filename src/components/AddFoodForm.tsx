@@ -34,7 +34,7 @@ export default function AddFoodForm() {
       use_digital_twin: useDigitalTwin,
     });
     const activeHours = useDigitalTwin ? item.predicted_spoilage_hours : item.expiry_hours;
-    toast.success(`Added "${item.food_name}" — ${useDigitalTwin ? `AI predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C` : `using your ${item.expiry_hours}h expiry`}`);
+    toast.success(`Added "${item.food_name}" — ${useDigitalTwin ? `Digital Twin predicted ${item.predicted_spoilage_hours}h shelf life at ${item.current_temp}°C` : `using your ${item.expiry_hours}h expiry`}`);
     setForm({ food_name: "", description: "", city: "", provider_address: "", quantity: "", expiry_hours: "" });
   };
 

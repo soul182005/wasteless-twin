@@ -61,7 +61,7 @@ const NgoDashboard = () => {
                         <span className="text-muted-foreground">⏱️</span>{" "}
                         <CountdownTimer targetTime={getExpiryTime(item)} />
                         <span className="ml-1 text-xs text-muted-foreground">
-                          {item.use_digital_twin ? "🧠 AI" : "📝 Manual"}
+                          {item.use_digital_twin ? "🧠 Digital Twin" : "📝 Manual"}
                         </span>
                       </p>
                     </div>
