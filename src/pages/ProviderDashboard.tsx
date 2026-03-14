@@ -5,7 +5,9 @@ import AddFoodForm from "@/components/AddFoodForm";
 import DigitalTwinGraph from "@/components/DigitalTwinGraph";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { getRemainingHours } from "@/lib/foodStore";
+import { getUrgencyLevel, getFoodEmoji } from "@/lib/digitalTwin";
 
 const ProviderDashboard = () => {
   const { foods, confirmPickup } = useFoodContext();
@@ -27,14 +29,6 @@ const ProviderDashboard = () => {
           <div className="flex flex-col items-center">
             <h2 className="font-display text-2xl font-bold mb-4 text-foreground">🧊 Your Fridge</h2>
             <CartoonFridge foods={activeFoods} />
-
-            {/* Digital Twin for latest item */}
-            {activeFoods.length > 0 && (
-              <Card className="mt-6 p-4 w-full max-w-sm">
-                <p className="text-xs text-muted-foreground mb-2 font-display">Latest: {activeFoods[activeFoods.length - 1].food_name}</p>
-                <DigitalTwinGraph item={activeFoods[activeFoods.length - 1]} />
-              </Card>
-            )}
           </div>
 
           {/* Right - Add Form */}
@@ -44,6 +38,46 @@ const ProviderDashboard = () => {
             </Card>
           </div>
         </div>
+
+        {/* All Active Food Cards with Graphs */}
+        {activeFoods.length > 0 && (
+          <div className="mt-10">
+            <h2 className="font-display text-xl font-bold mb-4 text-foreground">📊 Food Items — Expiry Tracking</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {activeFoods.map((item) => {
+                const remaining = getRemainingHours(item);
+                const urgency = getUrgencyLevel(remaining);
+                const urgencyBorder = urgency === "fresh"
+                  ? "urgency-fresh-border"
+                  : urgency === "warning"
+                  ? "urgency-warning-border"
+                  : "urgency-danger-border";
+
+                return (
+                  <Card key={item.id} className={`p-4 border-2 ${urgencyBorder}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="font-display font-semibold text-foreground">
+                        {getFoodEmoji(item.food_name)} {item.food_name}
+                      </p>
+                      <Badge variant={item.use_digital_twin ? "default" : "secondary"} className="text-[10px]">
+                        {item.use_digital_twin ? "🧠 Digital Twin" : "📝 Manual"}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      {item.quantity} — <span className="font-semibold">{Math.round(remaining)}h left</span>
+                    </p>
+                    {item.use_digital_twin && (
+                      <p className="text-xs text-muted-foreground mb-2">
+                        🌡️ {item.current_temp}°C · Provider expiry: {item.expiry_hours}h → Digital Twin: {item.predicted_spoilage_hours}h
+                      </p>
+                    )}
+                    <DigitalTwinGraph item={item} />
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Pickup Requests */}
         {pickupRequests.length > 0 && (
